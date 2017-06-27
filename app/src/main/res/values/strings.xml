@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">EstacoesSP</string>
+    <string name="titulo_linha">Linha: %1$s</string>
+</resources>
