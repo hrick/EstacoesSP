@@ -25,9 +25,11 @@ public class LinhasAdapter extends RecyclerView.Adapter<LinhasAdapter.LinhaViewH
 
     private List<Linha> linhas;
     private Context context;
+    private OnItemClickListener listener;
 
-    public LinhasAdapter(List<Linha> linhas, Context context) {
+    public LinhasAdapter(List<Linha> linhas, Context context, OnItemClickListener listener) {
         this.linhas = linhas;
+        this.listener = listener;
         this.context = context;
     }
 
@@ -39,10 +41,17 @@ public class LinhasAdapter extends RecyclerView.Adapter<LinhasAdapter.LinhaViewH
     }
 
     @Override
-    public void onBindViewHolder(LinhaViewHolder holder, int position) {
+    public void onBindViewHolder(LinhaViewHolder holder,final int position) {
         Linha linha = linhas.get(position);
         holder.tvCor.setText(linha.getCor());
         holder.tvNumeroLinha.setText(context.getString(R.string.titulo_linha,linha.getNumero()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(linhas.get(position));
+            }
+        });
 
         Picasso.with(context)
                 .load(APIUtil.BASE_URL + linha.getUrlImagem())
